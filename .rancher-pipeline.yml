@@ -2,14 +2,15 @@ stages:
 - name: Build
   steps:
   - runScriptConfig:
-      image: oraclelinux:7-slim
-      shellScript: ssh 
+      image: maven:3-jdk-7
+      shellScript: |-
+        mvn clean install
 - name: Publish
   steps:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: ledivan:${CICD_EXECUTION_SEQUENCE}
+      tag: example-greenhouse:${CICD_EXECUTION_SEQUENCE}
 - name: Deploy
   steps:
   - applyYamlConfig:
